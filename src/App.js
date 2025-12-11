@@ -10,6 +10,26 @@ function App(){
   const [weather,setWeather] = useState(null);
   const [error,setError] = useState("");
   const [aqi,setAqi]=useState(null);
+  const [aiMessage, setAiMessage] = useState("");
+
+  async function getAIForecast(query) {
+    try {
+      const res = await fetch(`http://localhost:5000/api/ai-forecast?q=${query}`);
+      const data = await res.json();
+      return data.reply;
+    } catch (err) {
+      console.error("AI Error:", err);
+      return "Aiyo! Server pothinjirikkunu. Try again da.";
+    }
+  }
+
+  async function handleAskAI() {
+    if (!city) return alert("City kudu da tambi!");
+
+    const reply = await getAIForecast(city);
+    setAiMessage(reply);
+  }
+
 
   const handleSearch = async() => {
     try{
@@ -62,13 +82,31 @@ function App(){
         <h1 className="text-2xl font-bold mb-1">Weather ☁️</h1>
         <p className="text-sm opacity-80 mb-4">
           Mood-based weather
+          
         </p>
 
         <SearchBox city={city} setCity={setCity} onSearch={handleSearch} />
 
         {error && <Error message={error} />}
         {weather && <WeatherCard weather={weather} aqi={aqi} />}
+                  {weather && (
+            <div className="mt-6">
+              <button
+                onClick={handleAskAI}
+                className="bg-purple-700 hover:bg-purple-800 transition px-4 py-2 rounded-xl text-white shadow-md"
+              >
+                Ask AI
+              </button>
 
+              {/* AI Reply Box */}
+              {aiMessage && (
+                <p className="mt-4 bg-black/30 p-3 rounded-xl text-sm leading-relaxed">
+                  {aiMessage}
+                </p>
+              )}
+            </div>
+          )}
+    
       </div>
     </div>
 

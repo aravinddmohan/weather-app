@@ -17,3 +17,4 @@ export const fetchAQI = async(lat,lon)=>{
     );
     return response.data.list[0];
 };
+

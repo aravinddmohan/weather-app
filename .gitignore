@@ -1,25 +1,22 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# React App Node Modules
+node_modules/
 
-# dependencies
-/node_modules
-/.pnp
-.pnp.js
+# Backend Node Modules
+backend/node_modules/
 
-# testing
-/coverage
-
-# production
-/build
-
-# misc
-.DS_Store
+# ENV files (VERY IMPORTANT)
 .env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-.vscode
+backend/.env
 
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+# Build outputs
+build/
+dist/
+backend/dist/
+
+# Logs
+*.log
+logs/
+
+# OS & Editor junk
+.DS_Store
+.vscode/

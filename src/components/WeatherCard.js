@@ -59,6 +59,9 @@ export default function WeatherCard({ weather, aqi }) {
         <div className="bg-white/20 rounded-lg p-2">
           💨 Wind: {wind} m/s
         </div>
+        <div className="bg-white/20 rounded-lg p-2">
+         👀 Visibility: {weather.visibility / 1000} km
+        </div>
 
         <div className="bg-white/20 rounded-lg p-2 col-span-2 capitalize">
           ☁️ Condition: {desc}

@@ -7,6 +7,11 @@ return (
         placeholder="Enter city"
         value={city}
         onChange={(e) => setCity(e.target.value)}
+        onKeyDown={(e) => {
+    if (e.key === "Enter") {
+      onSearch();  // calls your weather search function
+    }
+  }}
         className="flex-1 px-3 py-2 rounded-lg text-black outline-none"
       />
       <button
