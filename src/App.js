@@ -4,6 +4,9 @@ import { fetchAQI } from "./services/weatherService";
 import SearchBox from "./components/SearchBox";
 import WeatherCard from "./components/WeatherCard";
 import Error from "./components/Error";
+import { getForecast } from "./services/weatherService";
+import { groupForecast } from "./utils/groupForecast";
+import ForecastCard from "./components/ForecastCard";
 
 function App(){
   const [city,setCity] = useState(null);
@@ -11,6 +14,8 @@ function App(){
   const [error,setError] = useState("");
   const [aqi,setAqi]=useState(null);
   const [aiMessage, setAiMessage] = useState("");
+  const [forecast, setForecast] = useState(null);
+
 
   async function getAIForecast(query) {
     try {
@@ -40,11 +45,16 @@ function App(){
       const {lat,lon} = data.coord;
       const aqiData = await fetchAQI(lat,lon);
       setAqi(aqiData);
+
+      const forecastData = await getForecast(city);
+      const grouped =groupForecast(forecastData);
+      setForecast(grouped);
     }
     catch(error){
       setWeather(null);
       setAqi(null);
       setError("city not found");
+      setForecast(null);
     }
   };
 
@@ -60,6 +70,7 @@ function App(){
     if (condition.includes("haze") ||condition.includes("fog") ||condition.includes("smoke") ||condition.includes("dust") ||condition.includes("mist")) return "/videos/mist.mp4";
     return "/videos/snow.mp4";
 };
+
   return (
   <div className="min-h-screen relative overflow-hidden">
 
@@ -89,6 +100,7 @@ function App(){
 
         {error && <Error message={error} />}
         {weather && <WeatherCard weather={weather} aqi={aqi} />}
+        {forecast && <ForecastCard data={forecast} />}
                   {weather && (
             <div className="mt-6">
               <button

@@ -2,6 +2,7 @@ import axios from "axios";
 const API_KEY = process.env.REACT_APP_OWM_KEY;
 const BASE_URL = "https://api.openweathermap.org/data/2.5/weather";
 const AQI_URL ="https://api.openweathermap.org/data/2.5/air_pollution";
+const FORECAST_URL = "https://api.openweathermap.org/data/2.5/forecast";
 
 //-----Weather------//
 export const getWeatherByCity = async(city)=>{   
@@ -18,3 +19,10 @@ export const fetchAQI = async(lat,lon)=>{
     return response.data.list[0];
 };
 
+//--FivedayForecast--//
+export const getForecast=async(city)=>{
+    const response = await axios.get(
+        `${FORECAST_URL}?q=${city}&appid=${API_KEY}&units=metric`
+    );
+    return response.data;
+}
