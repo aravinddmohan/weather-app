@@ -14,17 +14,17 @@ function App(){
 
   async function getAIForecast(query) {
     try {
-      const res = await fetch(`http://localhost:5000/api/ai-forecast?q=${query}`);
+      const res = await fetch(`https://weather-app-d6jj.onrender.com/api/ai-forecast?q=${query}`);
       const data = await res.json();
       return data.reply;
     } catch (err) {
       console.error("AI Error:", err);
-      return "Aiyo! Server pothinjirikkunu. Try again da.";
+      return "Error Try later.";
     }
   }
 
   async function handleAskAI() {
-    if (!city) return alert("City kudu da tambi!");
+    if (!city) return alert("Please Enter City!");
 
     const reply = await getAIForecast(city);
     setAiMessage(reply);
